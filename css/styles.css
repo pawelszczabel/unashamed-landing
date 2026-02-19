@@ -269,10 +269,10 @@ section {
 }
 
 .hero-price {
-  font-size: 1.3rem;
+  font-size: 0.95rem;
   font-weight: 600;
   color: var(--text-primary);
-  margin-top: 1.2rem;
+  margin-top: 1rem;
   letter-spacing: 0.02em;
 }
 
@@ -280,7 +280,7 @@ section {
   text-decoration: line-through;
   color: #ef4444;
   font-weight: 700;
-  font-size: 1.4rem;
+  font-size: 1.05rem;
 }
 
 /* Book Cover (CSS-rendered) */
@@ -438,7 +438,7 @@ section {
 }
 
 .btn-large {
-  font-size: 1.1rem;
+  font-size: 1.25rem;
   padding: 20px 48px;
 }
 
