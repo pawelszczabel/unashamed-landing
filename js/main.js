@@ -1,6 +1,7 @@
 /* ==============================================
    UNASHAMED — Main JavaScript
-   Scroll animations, FAQ accordion, nav scroll
+   Scroll animations, FAQ accordion, nav scroll,
+   Firebase Analytics event tracking
    ============================================== */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -50,6 +51,11 @@ document.addEventListener('DOMContentLoaded', () => {
       // Toggle clicked
       if (!isActive) {
         item.classList.add('active');
+
+        // Firebase: FAQ open event
+        trackEvent('faq_open', {
+          question: question.textContent.trim()
+        });
       }
     });
   });
@@ -69,5 +75,53 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   });
+
+  // =============================================
+  // FIREBASE ANALYTICS — Event Tracking
+  // =============================================
+
+  /**
+   * Safe wrapper — logs event only when Firebase is loaded.
+   * Firebase SDK is loaded as a module in index.html and
+   * exposes window.__analytics and window.__logEvent.
+   */
+  function trackEvent(eventName, params) {
+    try {
+      if (window.__analytics && window.__logEvent) {
+        window.__logEvent(window.__analytics, eventName, params);
+      }
+    } catch (e) {
+      // Silently fail — analytics should never break the site
+    }
+  }
+
+  // --- CTA Button Clicks ---
+  document.querySelectorAll('[data-cta]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      trackEvent('click_buy_button', {
+        location: btn.getAttribute('data-cta'),
+        button_text: btn.textContent.trim()
+      });
+    });
+  });
+
+  // --- Section View Tracking ---
+  const sections = document.querySelectorAll('section[id]');
+
+  const sectionObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        trackEvent('view_section', {
+          section_id: entry.target.id,
+          section_name: entry.target.id.replace(/-/g, '_')
+        });
+        sectionObserver.unobserve(entry.target);
+      }
+    });
+  }, {
+    threshold: 0.3
+  });
+
+  sections.forEach(section => sectionObserver.observe(section));
 
 });

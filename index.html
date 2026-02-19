@@ -137,7 +137,7 @@
   <nav class="nav" id="nav">
     <div class="container">
       <a href="/" class="nav-logo">Unashamed</a>
-      <a href="#pricing" class="nav-cta">Get the Course — €29</a>
+      <a href="https://easl.ink/9jlFf" class="nav-cta" data-cta="nav">Get the Course — €29</a>
     </div>
   </nav>
 
@@ -151,7 +151,7 @@
         <p class="hero-description">You built the perfect life on the outside. The career. The composure. The plan. But
           inside, you're suffocating — trapped in armor called <strong class="text-accent">shame</strong>.</p>
         <p class="hero-description">This is your way out.</p>
-        <a href="#pricing" class="btn btn-primary btn-large">Defeat Shame — €29</a>
+        <a href="https://easl.ink/9jlFf" class="btn btn-primary btn-large" data-cta="hero">Defeat Shame — €29</a>
         <p class="hero-price">Regular price <span class="price-old">€79</span></p>
       </div>
       <div class="hero-cover">
@@ -462,7 +462,7 @@
           <li>Built on Nietzsche, Brené Brown, Pavlov, neuroscience, and voice therapy</li>
           <li>One payment. Yours forever. No subscriptions, no upsells.</li>
         </ul>
-        <a href="#buy" class="btn btn-primary btn-large">Defeat Shame — €29</a>
+        <a href="https://easl.ink/9jlFf" class="btn btn-primary btn-large" data-cta="pricing">Defeat Shame — €29</a>
       </div>
     </div>
   </section>
@@ -530,7 +530,7 @@
       <p class="final-declaration reveal">You're allowed to stop pretending.</p>
 
       <div class="reveal">
-        <a href="#pricing" class="btn btn-primary btn-large">Get UNASHAMED — €29</a>
+        <a href="https://easl.ink/9jlFf" class="btn btn-primary btn-large" data-cta="final">Get UNASHAMED — €29</a>
       </div>
     </div>
   </section>
@@ -548,6 +548,28 @@
     </div>
   </footer>
 
+  <!-- Firebase SDK (CDN) -->
+  <script type="module">
+    import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
+    import { getAnalytics, logEvent } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-analytics.js';
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyDc7ft-BkXeijJ6ilbI4kjudiURuX31ZKw",
+      authDomain: "unashamed-app.firebaseapp.com",
+      projectId: "unashamed-app",
+      storageBucket: "unashamed-app.firebasestorage.app",
+      messagingSenderId: "917280045354",
+      appId: "1:917280045354:web:06112ec29c87dcde9b4653",
+      measurementId: "G-E4FGN71F2J"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+
+    // Expose to main.js
+    window.__analytics = analytics;
+    window.__logEvent = logEvent;
+  </script>
   <script src="js/main.js"></script>
 </body>
 
