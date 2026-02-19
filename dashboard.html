@@ -35,103 +35,6 @@
             line-height: 1.6;
         }
 
-        /* ===== AUTH GATE ===== */
-        .auth-gate {
-            position: fixed;
-            inset: 0;
-            background: var(--bg);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 9999;
-            transition: opacity 0.4s ease, visibility 0.4s ease;
-        }
-
-        .auth-gate.hidden {
-            opacity: 0;
-            visibility: hidden;
-            pointer-events: none;
-        }
-
-        .auth-box {
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: 40px;
-            width: 380px;
-            text-align: center;
-            box-shadow: 0 0 60px rgba(108, 92, 231, 0.15);
-        }
-
-        .auth-box h2 {
-            font-size: 1.4rem;
-            margin-bottom: 8px;
-            background: linear-gradient(135deg, var(--accent), var(--green));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .auth-box p {
-            color: var(--text-dim);
-            font-size: 0.85rem;
-            margin-bottom: 24px;
-        }
-
-        .auth-input {
-            width: 100%;
-            padding: 14px 18px;
-            background: var(--surface-light);
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            color: var(--text);
-            font-size: 1rem;
-            outline: none;
-            transition: border-color 0.3s;
-        }
-
-        .auth-input:focus {
-            border-color: var(--accent);
-        }
-
-        .auth-input::placeholder {
-            color: var(--text-dim);
-        }
-
-        .auth-btn {
-            width: 100%;
-            margin-top: 16px;
-            padding: 14px;
-            background: linear-gradient(135deg, var(--accent), #8b5cf6);
-            border: none;
-            border-radius: 10px;
-            color: white;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-
-        .auth-btn:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 4px 20px var(--accent-glow);
-        }
-
-        .auth-error {
-            color: var(--red);
-            font-size: 0.85rem;
-            margin-top: 12px;
-            min-height: 20px;
-        }
-
-        /* ===== MAIN CONTENT ===== */
-        .dashboard {
-            display: none;
-        }
-
-        .dashboard.visible {
-            display: block;
-        }
-
         .container {
             max-width: 1200px;
             margin: 0 auto;
@@ -141,9 +44,6 @@
         header {
             padding: 32px 0 16px;
             border-bottom: 1px solid var(--border);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
         }
 
         header h1 {
@@ -151,28 +51,13 @@
             font-weight: 700;
             background: linear-gradient(135deg, var(--accent), var(--green));
             -webkit-background-clip: text;
+            background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
         header p {
             color: var(--text-dim);
             margin-top: 4px;
-        }
-
-        .logout-btn {
-            padding: 8px 16px;
-            background: transparent;
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            color: var(--text-dim);
-            font-size: 0.8rem;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .logout-btn:hover {
-            border-color: var(--red);
-            color: var(--red);
         }
 
         .status-bar {
@@ -383,318 +268,213 @@
 </head>
 
 <body>
+    <div class="container">
+        <header>
+            <h1>🤖 Google Ads Agent</h1>
+            <p>Claude Opus 4.6 × Antigravity × MCP</p>
+        </header>
 
-    <!-- ===== AUTH GATE ===== -->
-    <div class="auth-gate" id="authGate">
-        <div class="auth-box">
-            <h2>🔒 Agent Dashboard</h2>
-            <p>Dostęp tylko dla administratora</p>
-            <input type="password" class="auth-input" id="passwordInput" placeholder="Hasło..." autocomplete="off">
-            <button class="auth-btn" id="loginBtn">Zaloguj się</button>
-            <div class="auth-error" id="authError"></div>
+        <div class="status-bar">
+            <div class="status-card">
+                <div class="label">API Calls Today</div>
+                <div class="value green" id="api-calls">0</div>
+                <div class="sub">/ 15,000 limit</div>
+            </div>
+            <div class="status-card">
+                <div class="label">Active Skills</div>
+                <div class="value" style="color: var(--accent)">6</div>
+                <div class="sub">budget · bids · campaign · keywords · pmax · ads</div>
+            </div>
+            <div class="status-card">
+                <div class="label">Security Mode</div>
+                <div class="value green">ASK</div>
+                <div class="sub">Manual CONFIRM required</div>
+            </div>
+            <div class="status-card">
+                <div class="label">Budget Guard</div>
+                <div class="value green">ACTIVE</div>
+                <div class="sub">BATS Budget Tracker</div>
+            </div>
         </div>
-    </div>
 
-    <!-- ===== DASHBOARD (hidden until auth) ===== -->
-    <div class="dashboard" id="dashboard">
-        <div class="container">
-            <header>
-                <div>
-                    <h1>🤖 Google Ads Agent</h1>
-                    <p>Claude Opus 4.6 × Antigravity × MCP</p>
-                </div>
-                <button class="logout-btn" id="logoutBtn">Wyloguj</button>
-            </header>
+        <div class="chart-row">
+            <section>
+                <h2>📊 Efektywność: Manual vs AI Agent</h2>
+                <canvas id="efficiencyChart"></canvas>
+            </section>
+            <section>
+                <h2>🍩 Stos Technologiczny</h2>
+                <canvas id="techStackChart"></canvas>
+            </section>
+        </div>
 
-            <div class="status-bar">
-                <div class="status-card">
-                    <div class="label">API Calls Today</div>
-                    <div class="value green" id="api-calls">0</div>
-                    <div class="sub">/ 15,000 limit</div>
+        <section>
+            <h2>🏗️ Architektura Systemu</h2>
+            <div class="arch-diagram">
+                <div class="arch-node">
+                    <div class="icon">👤</div>
+                    <div class="name">Użytkownik</div>
+                    <div class="desc">Zlecenia i zatwierdzenia</div>
                 </div>
-                <div class="status-card">
-                    <div class="label">Active Skills</div>
-                    <div class="value" style="color: var(--accent)">6</div>
-                    <div class="sub">budget · bids · campaign · keywords · pmax · ads</div>
+                <div class="arch-arrow">→</div>
+                <div class="arch-node primary">
+                    <div class="icon">🧠</div>
+                    <div class="name">Claude Opus 4.6</div>
+                    <div class="desc">Antigravity IDE (natywny)</div>
                 </div>
-                <div class="status-card">
-                    <div class="label">Security Mode</div>
-                    <div class="value green">ASK</div>
-                    <div class="sub">Manual CONFIRM required</div>
+                <div class="arch-arrow">→</div>
+                <div class="arch-node">
+                    <div class="icon">🔌</div>
+                    <div class="name">MCP Server</div>
+                    <div class="desc">google-ads-mcp (read)</div>
                 </div>
-                <div class="status-card">
-                    <div class="label">Budget Guard</div>
-                    <div class="value green">ACTIVE</div>
-                    <div class="sub">BATS Budget Tracker</div>
+                <div class="arch-arrow">→</div>
+                <div class="arch-node">
+                    <div class="icon">📡</div>
+                    <div class="name">Google Ads API</div>
+                    <div class="desc">GAQL Queries + Mutates</div>
                 </div>
             </div>
-
-            <div class="chart-row">
-                <section>
-                    <h2>📊 Efektywność: Manual vs AI Agent</h2>
-                    <canvas id="efficiencyChart"></canvas>
-                </section>
-                <section>
-                    <h2>🍩 Stos Technologiczny</h2>
-                    <canvas id="techStackChart"></canvas>
-                </section>
+            <div class="arch-diagram" style="margin-top: 16px;">
+                <div class="arch-node">
+                    <div class="icon">🐍</div>
+                    <div class="name">Python Scripts</div>
+                    <div class="desc">Mutacje (dry-run / live)</div>
+                </div>
+                <div class="arch-arrow">→</div>
+                <div class="arch-node">
+                    <div class="icon">📄</div>
+                    <div class="name">Reports</div>
+                    <div class="desc">JSON + Markdown artefakty</div>
+                </div>
+                <div class="arch-arrow">→</div>
+                <div class="arch-node">
+                    <div class="icon">📊</div>
+                    <div class="name">Dashboard</div>
+                    <div class="desc">Wizualizacja wyników</div>
+                </div>
             </div>
+        </section>
 
-            <section>
-                <h2>🏗️ Architektura Systemu</h2>
-                <div class="arch-diagram">
-                    <div class="arch-node">
-                        <div class="icon">👤</div>
-                        <div class="name">Użytkownik</div>
-                        <div class="desc">Zlecenia i zatwierdzenia</div>
-                    </div>
-                    <div class="arch-arrow">→</div>
-                    <div class="arch-node primary">
-                        <div class="icon">🧠</div>
-                        <div class="name">Claude Opus 4.6</div>
-                        <div class="desc">Antigravity IDE (natywny)</div>
-                    </div>
-                    <div class="arch-arrow">→</div>
-                    <div class="arch-node">
-                        <div class="icon">🔌</div>
-                        <div class="name">MCP Server</div>
-                        <div class="desc">google-ads-mcp (read)</div>
-                    </div>
-                    <div class="arch-arrow">→</div>
-                    <div class="arch-node">
-                        <div class="icon">📡</div>
-                        <div class="name">Google Ads API</div>
-                        <div class="desc">GAQL Queries + Mutates</div>
-                    </div>
+        <section>
+            <h2>🛠️ Aktywne SKILLe Agenta</h2>
+            <div class="skills-grid">
+                <div class="skill-card">
+                    <div class="emoji">🔍</div>
+                    <div class="name">Budget Leak Auditor</div>
+                    <div class="desc">Wykrywa marnowane wydatki i nietrafione zapytania</div>
                 </div>
-                <div class="arch-diagram" style="margin-top: 16px;">
-                    <div class="arch-node">
-                        <div class="icon">🐍</div>
-                        <div class="name">Python Scripts</div>
-                        <div class="desc">Mutacje (dry-run / live)</div>
-                    </div>
-                    <div class="arch-arrow">→</div>
-                    <div class="arch-node">
-                        <div class="icon">📄</div>
-                        <div class="name">Reports</div>
-                        <div class="desc">JSON + Markdown artefakty</div>
-                    </div>
-                    <div class="arch-arrow">→</div>
-                    <div class="arch-node">
-                        <div class="icon">📊</div>
-                        <div class="name">Dashboard</div>
-                        <div class="desc">Wizualizacja wyników</div>
-                    </div>
+                <div class="skill-card">
+                    <div class="emoji">💰</div>
+                    <div class="name">Bid Strategy Manager</div>
+                    <div class="desc">Korekty stawek CPC/CPA/ROAS</div>
                 </div>
-            </section>
+                <div class="skill-card">
+                    <div class="emoji">🏗️</div>
+                    <div class="name">Campaign Creator</div>
+                    <div class="desc">Tworzenie struktur kampanii</div>
+                </div>
+                <div class="skill-card">
+                    <div class="emoji">🔑</div>
+                    <div class="name">Keyword Manager</div>
+                    <div class="desc">Zarządzanie portfolio słów</div>
+                </div>
+                <div class="skill-card">
+                    <div class="emoji">⚡</div>
+                    <div class="name">PMax Optimizer</div>
+                    <div class="desc">Optymalizacja Performance Max</div>
+                </div>
+                <div class="skill-card">
+                    <div class="emoji">📝</div>
+                    <div class="name">Ad Copy Generator</div>
+                    <div class="desc">Generacja tekstów RSA</div>
+                </div>
+            </div>
+        </section>
 
-            <section>
-                <h2>🛠️ Aktywne SKILLe Agenta</h2>
-                <div class="skills-grid">
-                    <div class="skill-card">
-                        <div class="emoji">🔍</div>
-                        <div class="name">Budget Leak Auditor</div>
-                        <div class="desc">Wykrywa marnowane wydatki i nietrafione zapytania</div>
-                    </div>
-                    <div class="skill-card">
-                        <div class="emoji">💰</div>
-                        <div class="name">Bid Strategy Manager</div>
-                        <div class="desc">Korekty stawek CPC/CPA/ROAS</div>
-                    </div>
-                    <div class="skill-card">
-                        <div class="emoji">🏗️</div>
-                        <div class="name">Campaign Creator</div>
-                        <div class="desc">Tworzenie struktur kampanii</div>
-                    </div>
-                    <div class="skill-card">
-                        <div class="emoji">🔑</div>
-                        <div class="name">Keyword Manager</div>
-                        <div class="desc">Zarządzanie portfolio słów</div>
-                    </div>
-                    <div class="skill-card">
-                        <div class="emoji">⚡</div>
-                        <div class="name">PMax Optimizer</div>
-                        <div class="desc">Optymalizacja Performance Max</div>
-                    </div>
-                    <div class="skill-card">
-                        <div class="emoji">📝</div>
-                        <div class="name">Ad Copy Generator</div>
-                        <div class="desc">Generacja tekstów RSA</div>
-                    </div>
+        <section>
+            <h2>🗺️ Mapa Drogowa</h2>
+            <div class="roadmap">
+                <div class="roadmap-phase done">
+                    <div class="phase-num">FAZA 0 ✅</div>
+                    <div class="phase-name">Credentials Setup</div>
                 </div>
-            </section>
-
-            <section>
-                <h2>🗺️ Mapa Drogowa</h2>
-                <div class="roadmap">
-                    <div class="roadmap-phase done">
-                        <div class="phase-num">FAZA 0 ✅</div>
-                        <div class="phase-name">Credentials Setup</div>
-                    </div>
-                    <div class="roadmap-phase done">
-                        <div class="phase-num">FAZA 1 ✅</div>
-                        <div class="phase-name">Infrastruktura</div>
-                    </div>
-                    <div class="roadmap-phase done">
-                        <div class="phase-num">FAZA 2 ✅</div>
-                        <div class="phase-name">AGENTS + SKILLs</div>
-                    </div>
-                    <div class="roadmap-phase done">
-                        <div class="phase-num">FAZA 3 ✅</div>
-                        <div class="phase-name">Skrypty Python</div>
-                    </div>
-                    <div class="roadmap-phase active">
-                        <div class="phase-num">FAZA 4 🔄</div>
-                        <div class="phase-name">Dashboard + Testy</div>
-                    </div>
-                    <div class="roadmap-phase">
-                        <div class="phase-num">FAZA 5</div>
-                        <div class="phase-name">Deployment 24/7</div>
-                    </div>
+                <div class="roadmap-phase done">
+                    <div class="phase-num">FAZA 1 ✅</div>
+                    <div class="phase-name">Infrastruktura</div>
                 </div>
-            </section>
+                <div class="roadmap-phase done">
+                    <div class="phase-num">FAZA 2 ✅</div>
+                    <div class="phase-name">AGENTS + SKILLs</div>
+                </div>
+                <div class="roadmap-phase done">
+                    <div class="phase-num">FAZA 3 ✅</div>
+                    <div class="phase-name">Skrypty Python</div>
+                </div>
+                <div class="roadmap-phase active">
+                    <div class="phase-num">FAZA 4 🔄</div>
+                    <div class="phase-name">Dashboard + Testy</div>
+                </div>
+                <div class="roadmap-phase">
+                    <div class="phase-num">FAZA 5</div>
+                    <div class="phase-name">Deployment 24/7</div>
+                </div>
+            </div>
+        </section>
 
-            <footer>
-                Google Ads Agent © 2026 | Claude Opus 4.6 × Antigravity | MCP Protocol
-                <br><a href="/" style="color: var(--text-dim); text-decoration: none;">← Powrót na stronę</a>
-            </footer>
-        </div>
+        <footer>
+            Google Ads Agent © 2026 | Claude Opus 4.6 × Antigravity | MCP Protocol
+            <br><a href="/" style="color: var(--text-dim); text-decoration: none;">← Powrót na stronę</a>
+        </footer>
     </div>
 
     <script>
-        (function () {
-            // SHA-256 hash of the dashboard password
-            // Change the hash below to use a different password.
-            // Generate new hash: echo -n "your_password" | shasum -a 256
-            const VALID_HASH = '6add31b0aa93d2950ebe01a40443a31cb2ecb4141db294650f3ddee24625bde7';
-
-            const SESSION_KEY = 'ads_agent_auth';
-            const SESSION_TTL = 24 * 60 * 60 * 1000; // 24h
-
-            const gate = document.getElementById('authGate');
-            const dashboard = document.getElementById('dashboard');
-            const input = document.getElementById('passwordInput');
-            const loginBtn = document.getElementById('loginBtn');
-            const logoutBtn = document.getElementById('logoutBtn');
-            const errorEl = document.getElementById('authError');
-
-            // Check existing session
-            function checkSession() {
-                try {
-                    const session = JSON.parse(localStorage.getItem(SESSION_KEY));
-                    if (session && Date.now() - session.ts < SESSION_TTL) {
-                        unlock();
-                        return true;
+        // Charts — render immediately (auth handled by Vercel Edge Middleware)
+        new Chart(document.getElementById('efficiencyChart'), {
+            type: 'bar',
+            data: {
+                labels: ['Audyt budżetu', 'Korekty stawek', 'Nowa kampania', 'Raport keyword', 'Kreacje RSA', 'Audyt PMax'],
+                datasets: [
+                    {
+                        label: 'Manual (minuty)',
+                        data: [120, 90, 180, 60, 45, 150],
+                        backgroundColor: 'rgba(255, 71, 87, 0.7)',
+                        borderRadius: 6,
+                    },
+                    {
+                        label: 'AI Agent (minuty)',
+                        data: [5, 3, 8, 2, 2, 5],
+                        backgroundColor: 'rgba(0, 210, 160, 0.7)',
+                        borderRadius: 6,
                     }
-                } catch (e) { }
-                return false;
-            }
-
-            // SHA-256 hash
-            async function sha256(message) {
-                const msgBuffer = new TextEncoder().encode(message);
-                const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
-                const hashArray = Array.from(new Uint8Array(hashBuffer));
-                return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
-            }
-
-            // Login
-            async function login() {
-                const password = input.value.trim();
-                if (!password) {
-                    errorEl.textContent = 'Wpisz hasło';
-                    return;
-                }
-
-                const hash = await sha256(password);
-                if (hash === VALID_HASH) {
-                    localStorage.setItem(SESSION_KEY, JSON.stringify({ ts: Date.now() }));
-                    unlock();
-                } else {
-                    errorEl.textContent = '❌ Nieprawidłowe hasło';
-                    input.value = '';
-                    input.focus();
+                ]
+            },
+            options: {
+                responsive: true,
+                plugins: { legend: { labels: { color: '#8a8a9a' } } },
+                scales: {
+                    x: { ticks: { color: '#8a8a9a', font: { size: 10 } }, grid: { color: '#2a2a3f' } },
+                    y: { ticks: { color: '#8a8a9a' }, grid: { color: '#2a2a3f' } }
                 }
             }
+        });
 
-            // Unlock dashboard
-            function unlock() {
-                gate.classList.add('hidden');
-                dashboard.classList.add('visible');
-                initCharts();
+        new Chart(document.getElementById('techStackChart'), {
+            type: 'doughnut',
+            data: {
+                labels: ['MCP Server', 'Claude Opus 4.6', 'Python Scripts', 'Dashboard', 'Budget Guard'],
+                datasets: [{
+                    data: [25, 35, 20, 10, 10],
+                    backgroundColor: ['#6c5ce7', '#00d2a0', '#ffa502', '#ff4757', '#3498db'],
+                    borderWidth: 0,
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: { legend: { position: 'bottom', labels: { color: '#8a8a9a', padding: 12 } } },
+                cutout: '65%',
             }
-
-            // Logout
-            function logout() {
-                localStorage.removeItem(SESSION_KEY);
-                dashboard.classList.remove('visible');
-                gate.classList.remove('hidden');
-                input.value = '';
-                errorEl.textContent = '';
-            }
-
-            // Events
-            loginBtn.addEventListener('click', login);
-            input.addEventListener('keydown', (e) => {
-                if (e.key === 'Enter') login();
-            });
-            logoutBtn.addEventListener('click', logout);
-
-            // Auto-check session on load
-            checkSession();
-
-            // Charts (only init after unlock)
-            function initCharts() {
-                if (window._chartsInit) return;
-                window._chartsInit = true;
-
-                new Chart(document.getElementById('efficiencyChart'), {
-                    type: 'bar',
-                    data: {
-                        labels: ['Audyt budżetu', 'Korekty stawek', 'Nowa kampania', 'Raport keyword', 'Kreacje RSA', 'Audyt PMax'],
-                        datasets: [
-                            {
-                                label: 'Manual (minuty)',
-                                data: [120, 90, 180, 60, 45, 150],
-                                backgroundColor: 'rgba(255, 71, 87, 0.7)',
-                                borderRadius: 6,
-                            },
-                            {
-                                label: 'AI Agent (minuty)',
-                                data: [5, 3, 8, 2, 2, 5],
-                                backgroundColor: 'rgba(0, 210, 160, 0.7)',
-                                borderRadius: 6,
-                            }
-                        ]
-                    },
-                    options: {
-                        responsive: true,
-                        plugins: { legend: { labels: { color: '#8a8a9a' } } },
-                        scales: {
-                            x: { ticks: { color: '#8a8a9a', font: { size: 10 } }, grid: { color: '#2a2a3f' } },
-                            y: { ticks: { color: '#8a8a9a' }, grid: { color: '#2a2a3f' } }
-                        }
-                    }
-                });
-
-                new Chart(document.getElementById('techStackChart'), {
-                    type: 'doughnut',
-                    data: {
-                        labels: ['MCP Server', 'Claude Opus 4.6', 'Python Scripts', 'Dashboard', 'Budget Guard'],
-                        datasets: [{
-                            data: [25, 35, 20, 10, 10],
-                            backgroundColor: ['#6c5ce7', '#00d2a0', '#ffa502', '#ff4757', '#3498db'],
-                            borderWidth: 0,
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        plugins: { legend: { position: 'bottom', labels: { color: '#8a8a9a', padding: 12 } } },
-                        cutout: '65%',
-                    }
-                });
-            }
-        })();
+        });
     </script>
 </body>
 
