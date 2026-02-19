@@ -36,7 +36,9 @@
 }
 
 /* --- Reset & Base --- */
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -97,7 +99,11 @@ img {
 }
 
 /* --- Typography --- */
-h1, h2, h3, h4, h5 {
+h1,
+h2,
+h3,
+h4,
+h5 {
   font-family: var(--font-heading);
   font-weight: 700;
   line-height: 1.15;
@@ -166,10 +172,21 @@ section {
   transform: translateY(0);
 }
 
-.reveal-delay-1 { transition-delay: 0.1s; }
-.reveal-delay-2 { transition-delay: 0.2s; }
-.reveal-delay-3 { transition-delay: 0.3s; }
-.reveal-delay-4 { transition-delay: 0.4s; }
+.reveal-delay-1 {
+  transition-delay: 0.1s;
+}
+
+.reveal-delay-2 {
+  transition-delay: 0.2s;
+}
+
+.reveal-delay-3 {
+  transition-delay: 0.3s;
+}
+
+.reveal-delay-4 {
+  transition-delay: 0.4s;
+}
 
 /* ========================================
    HERO SECTION
@@ -637,7 +654,8 @@ blockquote cite {
   margin-top: 2.5rem;
 }
 
-.for-list, .not-list {
+.for-list,
+.not-list {
   list-style: none;
 }
 
@@ -649,7 +667,8 @@ blockquote cite {
   color: var(--text-muted);
 }
 
-.for-list li, .not-list li {
+.for-list li,
+.not-list li {
   padding: 0.7em 0;
   padding-left: 1.5em;
   position: relative;
