@@ -269,20 +269,16 @@ section {
 }
 
 .hero-price {
-  font-size: 0.95rem;
-  color: var(--text-muted);
+  font-size: 1.1rem;
+  color: var(--text-secondary);
+  margin-top: 1rem;
 }
 
 .hero-price .price-old {
   text-decoration: line-through;
-  opacity: 0.6;
-  margin-right: 4px;
-}
-
-.hero-price .price-new {
   color: var(--accent);
-  font-weight: 700;
-  font-size: 1.1rem;
+  font-weight: 600;
+  font-size: 1.2rem;
 }
 
 /* Book Cover (CSS-rendered) */
