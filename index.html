@@ -127,6 +127,20 @@
   }
   </script>
 
+  <!-- Google Ads Conversion Tracking -->
+  <!-- 
+    SETUP: Replace AW-XXXXXXXXXX with your Google Ads Conversion ID
+    and YYYYYYY with your Conversion Label from:
+    Google Ads → Tools → Conversions → New → Website → Purchase
+  -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=AW-XXXXXXXXXX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'AW-XXXXXXXXXX');
+  </script>
+
   <!-- Styles -->
   <link rel="stylesheet" href="css/styles.css?v=3">
 </head>
@@ -570,6 +584,33 @@
     window.__analytics = analytics;
     window.__logEvent = logEvent;
   </script>
+
+  <!-- Google Ads Conversion Tracking — CTA Click Events -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      document.querySelectorAll('[data-cta]').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          var ctaType = this.getAttribute('data-cta');
+          // Google Ads conversion — replace AW-XXXXXXXXXX/YYYYYYY with real values
+          if (typeof gtag === 'function') {
+            gtag('event', 'conversion', {
+              'send_to': 'AW-XXXXXXXXXX/YYYYYYY',
+              'value': 29.0,
+              'currency': 'EUR',
+              'transaction_id': 'cta_' + ctaType + '_' + Date.now()
+            });
+          }
+          // Firebase Analytics
+          if (window.__logEvent && window.__analytics) {
+            window.__logEvent(window.__analytics, 'cta_click', {
+              cta_type: ctaType, value: 29.0, currency: 'EUR'
+            });
+          }
+        });
+      });
+    });
+  </script>
+
   <script src="js/main.js"></script>
 </body>
 
